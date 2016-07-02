@@ -11,12 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701200639) do
+ActiveRecord::Schema.define(version: 20160701211740) do
 
   create_table "addresses", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "uuid"
+    t.string   "street"
+    t.string   "permalink"
+    t.integer  "zip",        limit: 50
+    t.string   "city",                  default: "", null: false
+    t.string   "country",               default: "", null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
+
+  add_index "addresses", ["permalink"], name: "index_addresses_on_permalink"
+  add_index "addresses", ["uuid"], name: "index_addresses_on_uuid"
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "first_name"
@@ -35,9 +44,26 @@ ActiveRecord::Schema.define(version: 20160701200639) do
     t.integer "page_id"
   end
 
-  create_table "organizations", force: :cascade do |t|
+  add_index "admin_users_pages_joins", ["admin_user_id", "page_id"], name: "index_admin_users_pages_joins_on_admin_user_id_and_page_id"
+
+  create_table "bookings", force: :cascade do |t|
+    t.integer  "uuid"
+    t.string   "permalink"
+    t.string   "start_date"
+    t.string   "end_date"
+    t.string   "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  add_index "bookings", ["permalink"], name: "index_bookings_on_permalink"
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "title"
+    t.string   "descriptiom", limit: 50
+    t.string   "type",                   default: "", null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "pages", force: :cascade do |t|
@@ -76,19 +102,32 @@ ActiveRecord::Schema.define(version: 20160701200639) do
 
   add_index "sections", ["page_id"], name: "index_sections_on_page_id"
 
-  create_table "store2be", force: :cascade do |t|
-    t.string   "first_name", limit: 25
-    t.string   "last_name",  limit: 50
-    t.string   "email",                 null: false
-    t.string   "password",   limit: 40
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "spaces", force: :cascade do |t|
+    t.integer  "uuid"
+    t.string   "permalink"
+    t.string   "price_per_day",   limit: 50
+    t.string   "price_per_month", limit: 50
+    t.string   "price_per_week",             default: "", null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
+
+  add_index "spaces", ["permalink"], name: "index_spaces_on_permalink"
 
   create_table "store2bes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "stores", force: :cascade do |t|
+    t.integer  "uuid"
+    t.string   "permalink"
+    t.string   "opening hours"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "stores", ["permalink"], name: "index_stores_on_permalink"
 
   create_table "subjects", force: :cascade do |t|
     t.string   "name"
@@ -96,13 +135,6 @@ ActiveRecord::Schema.define(version: 20160701200639) do
     t.boolean  "visible",    default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-  end
-
-  create_table "todos", force: :cascade do |t|
-    t.string   "title"
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
   end
 
 end
