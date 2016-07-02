@@ -1,0 +1,16 @@
+<h1>edit robot <%= @robot.title %></h1>
+
+<% form_for(:robot, @robot, :url => {:action => 'update', :id => @robot.id}) do |f| %>
+  <p>
+    Title: <%= f.text_field 'title' %>
+  </p>
+  <p>
+    Power: <%= f.text_field 'title' %>
+  </p>
+  <p>
+    Body: <%= f.text_area 'body' %>
+  </p>
+  <p>
+    <%= f.submit "Save" %>
+  </p>
+<% end %>

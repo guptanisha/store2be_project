@@ -1,0 +1,18 @@
+<h1>Listing robots</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @robots.each do |robot| %>
+  <tr>
+    <td><%= link_to robot.name, :action => 'show', :id => robot.id %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => robot.id %></td>
+    <td><%= link_to 'Destroy', {:action => 'destroy', :id => robot.id}, :confirm => 'Are you sure?', :method => :post %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New robot', :action => 'new' %>

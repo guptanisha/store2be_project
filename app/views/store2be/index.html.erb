@@ -1,0 +1,31 @@
+<div class="organization index">
+    <h2>Store2be</h2>
+
+<%= link_to("Add New organization",  '#',  :class => 'action new') %>
+
+<table class="listing" summary="Subject list">
+  <tr class="header">
+  <th>&nbsp;</th>
+<th>organization</th>
+<th>Address</th>
+<th>Store</th>
+<th>Space</th>
+<th>Booking</th>
+
+</tr>
+<%  @organizations.each do  |subject|  %>
+<tr>
+     <td><%= @organization.position  %></td>
+       <td><%= @organization.title %></td>
+       <td   class="center"><%=  organization.visible  ?  'Yes'   :   'No'   %></td>
+       <td  class="center"><%=  organization.pages.size  %></td>
+       <td  class="actions">
+
+  <%= link_to("Show",  '#',  :class => 'action show') %>
+  <%= link_to("Edit",  '#',  :class => 'action edit') %>
+  <%= link_to("Delete",  '#',  :class => 'action delete') %>
+</td>
+</tr>
+<%  end  %>
+          </table>
+</div>
